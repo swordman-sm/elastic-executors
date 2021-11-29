@@ -73,7 +73,8 @@ public class DefaultElasticThreadPoolExecutor extends ThreadPoolExecutor impleme
         // 拒绝策略
         private RejectedExecutionHandler rejectedExecutionHandler = new ThreadPoolExecutor.AbortPolicy();
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder poolName(String poolName) {
             Asserts.notEmpty(poolName, "poolName is empty");
@@ -181,16 +182,16 @@ public class DefaultElasticThreadPoolExecutor extends ThreadPoolExecutor impleme
         this.shutdown();
 
         try {
-           boolean terminated = awaitTermination(timeout, timeUnit);
-           if (terminated) {
-               if (LOGGER.isDebugEnabled()) {
-                   LOGGER.debug("线程池{}关闭成功", poolName);
-               }
-           } else {
-               if (LOGGER.isWarnEnabled()) {
-                   LOGGER.warn("在{}{}内，线程池{}没有成功关闭", timeout, timeUnit.toString(), poolName);
-               }
-           }
+            boolean terminated = awaitTermination(timeout, timeUnit);
+            if (terminated) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("线程池{}关闭成功", poolName);
+                }
+            } else {
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("在{}{}内，线程池{}没有成功关闭", timeout, timeUnit.toString(), poolName);
+                }
+            }
         } catch (InterruptedException e) {
             LOGGER.error("线程池{}关闭过程中发生中断异常", poolName);
         }
@@ -233,7 +234,7 @@ public class DefaultElasticThreadPoolExecutor extends ThreadPoolExecutor impleme
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("线程池{}: keepAliveTime 新值: {}和旧值: {}一样，不做修改更新操作", poolName, time, oldKeepAliveTime);
             }
-            return ;
+            return;
         } else {
             super.setKeepAliveTime(time, unit);
             if (LOGGER.isInfoEnabled()) {
@@ -251,7 +252,7 @@ public class DefaultElasticThreadPoolExecutor extends ThreadPoolExecutor impleme
             }
         }
         if (workQueue instanceof ResizableBlockingQueue) {
-            ((ResizableBlockingQueue)workQueue).setCapacity(newWorkQueueCapacity);
+            ((ResizableBlockingQueue) workQueue).setCapacity(newWorkQueueCapacity);
             this.workQueueCapacity = newWorkQueueCapacity;
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("线程池{}: 工作队列{}，容量 workQueueCapacity 已被修改生效，新值: {}, 旧值: {}", poolName, workQueue.getClass().getSimpleName(), newWorkQueueCapacity, workQueueCapacity);

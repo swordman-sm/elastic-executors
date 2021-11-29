@@ -1,13 +1,11 @@
 package com.don.elastic.executors.config;
 
-import com.don.elastic.executors.excutor.ElasticExecutor;
 import com.don.elastic.executors.selector.DefaultExecutorSelector;
 import com.don.elastic.executors.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

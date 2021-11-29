@@ -1,10 +1,6 @@
 package com.don.elastic.executors;
 
 
-import com.don.elastic.executors.excutor.DefaultElasticThreadPoolExecutor;
-import com.don.elastic.executors.excutor.ElasticExecutor;
-import com.don.elastic.executors.queue.BlockingQueueBuilder;
-import com.don.elastic.executors.queue.ResizableLinkedBlockingQueue;
 import com.don.elastic.executors.task.DefaultExecutorTask;
 import com.don.elastic.executors.task.ExecutorTaskContext;
 import org.junit.Test;

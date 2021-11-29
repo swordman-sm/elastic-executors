@@ -1,5 +1,6 @@
 package com.don.elastic.executors.config;
 
+import com.alibaba.fastjson.JSONObject;
 import com.don.elastic.executors.excutor.ElasticExecutor;
 import com.don.elastic.executors.excutor.NamedThreadFactory;
 import com.don.elastic.executors.queue.ResizableLinkedBlockingQueue;
@@ -16,25 +17,45 @@ import java.util.concurrent.*;
  */
 public class ExecutorProperty {
 
-    // cpu core
+    /**
+     * cpu core
+     */
     private static final int CPU_PROCESSOR_SIZE = Runtime.getRuntime().availableProcessors();
-    // 线程池名称
+    /**
+     * 线程池名称
+     */
     private static final String DEFAULT_POOL_NAME = ElasticExecutor.DEFAULT_POOL_NAME;
-    // 核心线程数
+    /**
+     * 核心线程数
+     */
     private static final int DEFAULT_CORE_POOL_SIZE = CPU_PROCESSOR_SIZE;
-    // 最大线程池
+    /**
+     * 最大线程池
+     */
     private static final int DEFAULT_MAXIMUM_POOL_SIZE = 2 * CPU_PROCESSOR_SIZE + 1;
-    // 空闲保持时间
+    /**
+     * 空闲保持时间
+     */
     private static final int DEFAULT_KEEP_ALIVE_TIME = 6000;
-    // 阻塞队列容量
+    /**
+     * 阻塞队列容量
+     */
     private static final int DEFAULT_QUEUE_CAPACITY = 200;
-    // 阻塞队列类型
+    /**
+     * 阻塞队列类型
+     */
     private static final String DEFAULT_WORK_QUEUE_TYPE = LinkedBlockingDeque.class.getSimpleName();
-    // 拒绝策略类型
+    /**
+     * 拒绝策略类型
+     */
     private static final String DEFAULT_REJECTED_HANDLER_TYPE = ThreadPoolExecutor.AbortPolicy.class.getSimpleName();
-    // 默认选择器表达式
+    /**
+     * 默认选择器表达式
+     */
     private static final String DEFAULT_SELECTOR_EXPRESSION = "";
-
+    /**
+     * 配置参数选择项
+     */
     private static final String POOL_NAME = "name";
     private static final String CORE_POOL_SIZE = "corePoolSize";
     private static final String MAXIMUM_POOL_SIZE = "maximumPoolSize";
@@ -44,7 +65,7 @@ public class ExecutorProperty {
     private static final String REJECTED_HANDLER_TYPE = "rejectedHandlerType";
     private static final String SELECTOR_EXPRESSION = "expression";
 
-    private final Map<String, String> properties;
+    private final Properties properties;
 
     private static final Map<String, BlockingQueue<Runnable>> BLOCKING_QUEUES = new HashMap<>();
     private static final Map<String, RejectedExecutionHandler> REJECTED_HANDLERS = new HashMap<>();
@@ -52,15 +73,15 @@ public class ExecutorProperty {
     private final ThreadFactory threadFactory;
 
     public ExecutorProperty() {
-        properties = new HashMap<>();
-        properties.put(POOL_NAME, DEFAULT_POOL_NAME);
-        properties.put(CORE_POOL_SIZE, DEFAULT_CORE_POOL_SIZE + "");
-        properties.put(MAXIMUM_POOL_SIZE, DEFAULT_MAXIMUM_POOL_SIZE + "");
-        properties.put(KEEP_ALIVE_TIME, DEFAULT_KEEP_ALIVE_TIME + "");
-        properties.put(QUEUE_CAPACITY, DEFAULT_QUEUE_CAPACITY + "");
-        properties.put(WORK_QUEUE_TYPE, DEFAULT_WORK_QUEUE_TYPE);
-        properties.put(REJECTED_HANDLER_TYPE, DEFAULT_REJECTED_HANDLER_TYPE);
-        properties.put(SELECTOR_EXPRESSION, DEFAULT_SELECTOR_EXPRESSION);
+        properties = new Properties();
+        properties.setProperty(POOL_NAME, DEFAULT_POOL_NAME);
+        properties.setProperty(CORE_POOL_SIZE, DEFAULT_CORE_POOL_SIZE + "");
+        properties.setProperty(MAXIMUM_POOL_SIZE, DEFAULT_MAXIMUM_POOL_SIZE + "");
+        properties.setProperty(KEEP_ALIVE_TIME, DEFAULT_KEEP_ALIVE_TIME + "");
+        properties.setProperty(QUEUE_CAPACITY, DEFAULT_QUEUE_CAPACITY + "");
+        properties.setProperty(WORK_QUEUE_TYPE, DEFAULT_WORK_QUEUE_TYPE);
+        properties.setProperty(REJECTED_HANDLER_TYPE, DEFAULT_REJECTED_HANDLER_TYPE);
+        properties.setProperty(SELECTOR_EXPRESSION, DEFAULT_SELECTOR_EXPRESSION);
 
         BLOCKING_QUEUES.put(ResizableLinkedBlockingQueue.class.getSimpleName(), new DelayQueue());
         BLOCKING_QUEUES.put(LinkedBlockingQueue.class.getSimpleName(), new LinkedBlockingQueue<>());
@@ -79,24 +100,24 @@ public class ExecutorProperty {
     }
 
     public String getPoolName() {
-        return Strings.blankDefault(properties.get(POOL_NAME), DEFAULT_POOL_NAME);
+        return properties.getProperty(POOL_NAME, DEFAULT_POOL_NAME);
     }
 
     public int getCorePoolSize() {
-        return Strings.blankDefaultInt(properties.get(CORE_POOL_SIZE), DEFAULT_CORE_POOL_SIZE);
+        return Integer.parseInt(properties.getProperty(CORE_POOL_SIZE, DEFAULT_CORE_POOL_SIZE + ""));
     }
 
     public int getMaximumPoolSize() {
-        return Strings.blankDefaultInt(properties.get(MAXIMUM_POOL_SIZE), DEFAULT_MAXIMUM_POOL_SIZE);
+        return Integer.parseInt(properties.getProperty(MAXIMUM_POOL_SIZE, DEFAULT_MAXIMUM_POOL_SIZE + ""));
     }
 
 
     public long getKeepAliveTime() {
-        return Strings.blankDefaultLong(properties.get(KEEP_ALIVE_TIME), DEFAULT_KEEP_ALIVE_TIME);
+        return Long.parseLong(properties.getProperty(KEEP_ALIVE_TIME, DEFAULT_KEEP_ALIVE_TIME + ""));
     }
 
     public String getWorkQueueType() {
-        return Strings.blankDefault(properties.get(WORK_QUEUE_TYPE), DEFAULT_WORK_QUEUE_TYPE);
+        return properties.getProperty(WORK_QUEUE_TYPE, DEFAULT_WORK_QUEUE_TYPE);
     }
 
     public BlockingQueue<Runnable> getWorkQueue() {
@@ -104,11 +125,11 @@ public class ExecutorProperty {
     }
 
     public int getQueueCapacity() {
-        return Strings.blankDefaultInt(properties.get(QUEUE_CAPACITY), DEFAULT_QUEUE_CAPACITY);
+        return Integer.parseInt(properties.getProperty(QUEUE_CAPACITY, DEFAULT_QUEUE_CAPACITY + ""));
     }
 
     public String getRejectedHandlerType() {
-        return Strings.blankDefault(properties.get(REJECTED_HANDLER_TYPE), DEFAULT_REJECTED_HANDLER_TYPE);
+        return properties.getProperty(REJECTED_HANDLER_TYPE, DEFAULT_REJECTED_HANDLER_TYPE);
     }
 
     public RejectedExecutionHandler getRejectedHandler() {
@@ -116,7 +137,7 @@ public class ExecutorProperty {
     }
 
     public String getExpression() {
-        return Strings.blankDefault(properties.get(SELECTOR_EXPRESSION), DEFAULT_SELECTOR_EXPRESSION);
+        return properties.getProperty(SELECTOR_EXPRESSION, DEFAULT_SELECTOR_EXPRESSION);
     }
 
     public ThreadFactory getThreadFactory() {
