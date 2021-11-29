@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 弹性的线程池executor，默认底层采用JDK线程池实现
- * @author Don Du
  */
 public interface ElasticExecutor extends ConfigurableExecutor, MonitoringExecutor, ExecutorService {
 

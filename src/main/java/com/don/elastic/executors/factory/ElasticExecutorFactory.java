@@ -6,12 +6,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池工厂
- * @author Don Du
  */
 public interface ElasticExecutorFactory {
 
     /**
      * 根据poolName获取线程池
+     *
      * @param poolName
      * @return
      */
@@ -19,6 +19,7 @@ public interface ElasticExecutorFactory {
 
     /**
      * 关闭所有线程池
+     *
      * @param timeout
      * @param timeUnit
      */

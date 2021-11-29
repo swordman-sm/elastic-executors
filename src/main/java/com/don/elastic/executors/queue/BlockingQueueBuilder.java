@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 /**
- * @author Don Du
  */
 public class BlockingQueueBuilder<E> {
 

@@ -1,7 +1,6 @@
 package com.don.elastic.executors.util;
 
 /**
- * @author Don Du
  */
 public abstract class Strings {
 

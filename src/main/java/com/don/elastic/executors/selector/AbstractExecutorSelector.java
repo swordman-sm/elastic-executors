@@ -16,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 抽象选择器，支持复杂的逻辑表达式
- * @author Don Du
  */
 public abstract class AbstractExecutorSelector implements ExecutorSelector {
 

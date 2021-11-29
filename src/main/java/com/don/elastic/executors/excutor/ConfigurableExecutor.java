@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 可动态修改配置参数的线程池
- * @author Don Du
  */
 public interface ConfigurableExecutor extends Executor {
 

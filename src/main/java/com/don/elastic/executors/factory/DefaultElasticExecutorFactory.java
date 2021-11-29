@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * jdk线程池工厂
- * @author Don Du
  */
 public class DefaultElasticExecutorFactory extends AbstractElasticExecutorFactory {
 

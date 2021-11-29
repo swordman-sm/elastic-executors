@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 复合弹性线程池
- * @author Don Du
  */
 public interface ElasticExecutors {
 

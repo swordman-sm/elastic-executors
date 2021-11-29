@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.LongAdder;
 
 /**
  * 默认的线程池
- * @author Don Du
  */
 public class DefaultElasticThreadPoolExecutor extends ThreadPoolExecutor implements ElasticExecutor {
 

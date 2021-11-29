@@ -6,7 +6,6 @@ import java.util.concurrent.RejectedExecutionHandler;
 
 /**
  * 受监控的线程池
- * @author Don Du
  */
 public interface MonitoringExecutor extends Executor {
 

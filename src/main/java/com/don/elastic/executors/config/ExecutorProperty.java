@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.concurrent.*;
 
 /**
- * @author Don Du
+ *
  */
 public class ExecutorProperty {
 

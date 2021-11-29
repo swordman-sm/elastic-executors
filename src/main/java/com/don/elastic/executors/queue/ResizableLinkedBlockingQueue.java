@@ -10,13 +10,14 @@ import java.util.function.Consumer;
 
 /**
  * 参考LinkedBlockingQueue实现可变容量的阻塞队列
+ *
  * @param <E>
- * @author don du
  */
 public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements ResizableBlockingQueue<E>, Serializable {
 
     /**
      * 链表节点类定义
+     *
      * @param <E>
      */
     static class Node<E> {
@@ -97,6 +98,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
 
     /**
      * 节点入队
+     *
      * @param node
      */
     private void enqueue(Node<E> node) {
@@ -141,6 +143,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
 
     /**
      * 使用指定容量创建队列
+     *
      * @param capacity
      */
     public ResizableLinkedBlockingQueue(int capacity) {
@@ -154,6 +157,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
 
     /**
      * 使用Integer.MAX_VALUE容量创建队列，并按照遍历顺序添加指定的集合元素到队列中
+     *
      * @param collection
      */
     public ResizableLinkedBlockingQueue(Collection<? extends E> collection) {
@@ -163,7 +167,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
         putLock.lock();
         try {
             int n = 0;
-            for(E e : collection) {
+            for (E e : collection) {
                 if (e == null) {
                     throw new NullPointerException();
                 }
@@ -181,6 +185,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
 
     /**
      * 修改队列大小，线程安全的
+     *
      * @param capacity
      */
     @Override
@@ -396,6 +401,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
 
     /**
      * 撤销内部节点p与前置节点trail的链接
+     *
      * @param p
      * @param trail
      */
@@ -417,7 +423,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
         }
         fullyLock();
         try {
-            for(Node<E> trail = head, p = trail.next; p != null; trail = p.next, p = trail.next) {
+            for (Node<E> trail = head, p = trail.next; p != null; trail = p.next, p = trail.next) {
                 if (o.equals(p.item)) {
                     unlink(p, trail);
                     return true;
@@ -512,7 +518,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
             }
             StringBuilder sb = new StringBuilder();
             sb.append('[');
-            for (;;) {
+            for (; ; ) {
                 E e = p.item;
                 sb.append(e == this ? "(this Collection)" : e);
                 p = p.next;
@@ -605,12 +611,11 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
         }
 
         /**
-         *
          * @param p
          * @return
          */
         private Node<E> nextNode(Node<E> p) {
-            for(;;) {
+            for (; ; ) {
                 Node<E> s = p.next;
                 if (s == p) {
                     return head.next;
@@ -657,13 +662,14 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
                     }
                 }
             } finally {
-              fullyUnlock();
+                fullyUnlock();
             }
         }
     }
 
     /**
      * 自定义Spliterators.IteratorSpliterator
+     *
      * @param <E>
      */
     static final class LBQSpliterator<E> implements Spliterator<E> {
@@ -717,8 +723,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
                 if ((current = p) == null) {
                     est = 0L;
                     exhausted = true;
-                }
-                else if ((est -= i) < 0L)
+                } else if ((est -= i) < 0L)
                     est = 0L;
                 if (i > 0) {
                     batch = i;
@@ -796,7 +801,7 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
         return new LBQSpliterator<E>(this);
     }
 
-    private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException{
+    private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
         fullyLock();
         try {
             s.defaultWriteObject();
@@ -814,8 +819,8 @@ public class ResizableLinkedBlockingQueue<E> extends AbstractQueue<E> implements
         s.defaultReadObject();
         count.set(0);
         last = head = new Node<E>(null);
-        for (;;) {
-            E item = (E)s.readObject();
+        for (; ; ) {
+            E item = (E) s.readObject();
             if (item == null)
                 break;
             add(item);

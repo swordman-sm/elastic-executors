@@ -4,7 +4,6 @@ import java.util.concurrent.RejectedExecutionException;
 
 /**
  * 任务提交被拒绝异常
- * @author Don Du
  */
 public class TaskRejectedException extends RejectedExecutionException {
 

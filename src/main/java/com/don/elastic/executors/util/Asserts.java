@@ -2,7 +2,6 @@ package com.don.elastic.executors.util;
 
 /**
  * 断言工具
- * @author Don Du
  */
 public abstract class Asserts {
 

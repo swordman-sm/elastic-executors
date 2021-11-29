@@ -5,7 +5,6 @@ import com.don.elastic.executors.task.ExecutorTaskContext;
 
 /**
  * 默认线程池选择器，直接选择默认线程池
- * @author Don Du
  */
 public class DefaultExecutorSelector extends AbstractExecutorSelector {
 

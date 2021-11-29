@@ -4,7 +4,6 @@ import java.util.concurrent.Callable;
 
 /**
  * 线程池任务
- * @author Don Du
  */
 public interface ExecutorTask<V> extends Callable<V> {
 

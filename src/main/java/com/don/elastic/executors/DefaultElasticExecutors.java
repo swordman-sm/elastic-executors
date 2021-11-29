@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * 复合线程池默认实现
  *
- * @author Don Du
  */
 public class DefaultElasticExecutors implements ElasticExecutors {
 

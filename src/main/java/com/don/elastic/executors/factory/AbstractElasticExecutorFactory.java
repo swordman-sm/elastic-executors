@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 抽象将真正的线程池创建逻辑交给子类，懒启动
- * @author Don Du
  */
 public abstract class AbstractElasticExecutorFactory implements ElasticExecutorFactory {
 
@@ -17,6 +16,7 @@ public abstract class AbstractElasticExecutorFactory implements ElasticExecutorF
 
     /**
      * 获取指定名称的线程池，如果获取不到返回内置默认线程池
+     *
      * @param poolKey
      * @return
      */
@@ -45,6 +45,7 @@ public abstract class AbstractElasticExecutorFactory implements ElasticExecutorF
 
     /**
      * 创建线程池
+     *
      * @param poolName
      * @return
      */

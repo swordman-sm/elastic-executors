@@ -5,7 +5,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 默认的线程池任务
- * @author Don Du
  */
 public class DefaultExecutorTask<V> implements ExecutorTask<V> {
 
